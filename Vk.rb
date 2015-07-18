@@ -27,6 +27,26 @@ class Vk
 
   end
 
+  def creat_dir (name)
+
+    FileUtils::mkdir_p name.to_s
+    
+  end
+
+  def creat_file (name)
+
+      File.new name.to_s,'w'
+
+  end
+
+  def push_text_file(name,str)
+
+    file = File.open(name.to_s, 'a+')
+    file.puts(str.to_s)
+    file.close
+
+  end
+
 
 
 

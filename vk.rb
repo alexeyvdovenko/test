@@ -1,11 +1,23 @@
 require 'httparty'
 require 'json'
+require "fileutils"
+require_relative 'Vk.rb'
 
-a = HTTParty.get ("https://api.vk.com/method/database.getCountries?need_all=1")
+object = Vk.new
+result = object.parse_json(object.set_data_country)
+
+# dir = Dir.open('test')
+#   object.creat_file('text.txt')
+# dir.close
 
 
-result = JSON.parse(a.response.body)
+result.each{|k,all_contry|
+  all_contry.each{|contry|
+    contry.each{|key,value|
+      if(key.to_s == 'title')
+          object.creat_dir(value.to_s)
+      end
 
-result.each{|arr|
-  puts arr
+    }
+  }
 }
