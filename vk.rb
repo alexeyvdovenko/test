@@ -1,23 +1,12 @@
 require 'httparty'
 require 'json'
 require "fileutils"
-require_relative 'Vk.rb'
+require_relative 'CatalogCountryCityUniversitiesFromVk.rb'
 
-object = Vk.new
-result = object.parse_json(object.set_data_country)
+object = CatalogCountryCityUniversitiesFromVk.new                  #создали объект класса CatalogContryCityUniversitiesFromVk
 
-# dir = Dir.open('test')
-#   object.creat_file('text.txt')
-# dir.close
+data_country_all = object.parse_json(object.set_data_country_all) #получили данные от метода set_data_country_all и сразу распарсили их
+data_country = object.parse_json(object.set_data_country)
 
-
-result.each{|k,all_contry|
-  all_contry.each{|contry|
-    contry.each{|key,value|
-      if(key.to_s == 'title')
-          object.creat_dir(value.to_s)
-      end
-
-    }
-  }
-}
+object.creat_catalog(data_country_all)                            #запустили метод создания каталога и передали в него хешь всех стран
+object.creat_catalog(data_country)                                #полученных от vkappi
